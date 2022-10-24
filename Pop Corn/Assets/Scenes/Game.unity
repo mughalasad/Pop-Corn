@@ -2513,7 +2513,7 @@ MonoBehaviour:
   - {fileID: 1606896348}
   - {fileID: 1699650190}
   - {fileID: 1950152156}
-  speed: 1.5
+  speed: 1
   scoretext: {fileID: 125459257}
 --- !u!114 &1135390808
 MonoBehaviour:
