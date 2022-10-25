@@ -223,14 +223,14 @@ public class Spawner : MonoBehaviour
     }
     void Update()
     {
-        button1.transform.Rotate(Vector3.forward * Time.deltaTime*30);
-        Corn1.transform.Rotate(Vector3.back * Time.deltaTime * 30);
-        button2.transform.Rotate(Vector3.forward * Time.deltaTime * 30);
-        Corn2.transform.Rotate(Vector3.back * Time.deltaTime * 30);
-        button3.transform.Rotate(Vector3.forward * Time.deltaTime * 30);
-        Corn3.transform.Rotate(Vector3.back * Time.deltaTime * 30);
-        button4.transform.Rotate(Vector3.forward * Time.deltaTime * 30);
-        Corn4.transform.Rotate(Vector3.back * Time.deltaTime * 30);
+        button1.transform.Rotate(Vector3.forward * Time.deltaTime*60);
+        Corn1.transform.Rotate(Vector3.back * Time.deltaTime * 60);
+        button2.transform.Rotate(Vector3.forward * Time.deltaTime * 45);
+        Corn2.transform.Rotate(Vector3.back * Time.deltaTime * 45);
+        button3.transform.Rotate(Vector3.forward * Time.deltaTime * 35);
+        Corn3.transform.Rotate(Vector3.back * Time.deltaTime * 35);
+        button4.transform.Rotate(Vector3.forward * Time.deltaTime * 50);
+        Corn4.transform.Rotate(Vector3.back * Time.deltaTime * 50);
         countertext.text = scorer + " / 5";
         closingtext.text = scorekeeper + " / 10";
         Vector3 pos = button1.transform.position;
