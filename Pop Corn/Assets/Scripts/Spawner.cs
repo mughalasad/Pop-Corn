@@ -3,7 +3,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class Spawner : MonoBehaviour
+public class Spawner : MonoBehaviour,IDataPersistence
 {
     [SerializeField] private TextMeshProUGUI Corn1;
     [SerializeField] private TextMeshProUGUI Corn2;
@@ -22,6 +22,8 @@ public class Spawner : MonoBehaviour
     [SerializeField] private GameObject circle;
     [SerializeField] private GameObject circlelocation;
     [SerializeField] private GameObject[] position;
+    [SerializeField] private AudioSource trueanswer;
+    [SerializeField] private AudioSource wronganswer;
     private GameObject spawn;
     Vector3 loc1,loc2, loc3, loc4;
     int letter1;
@@ -31,7 +33,8 @@ public class Spawner : MonoBehaviour
     int counter;
     int scorer = 0;
     int scorekeeper = 0;
-    public float speed;
+    float speed;
+    int rotation;
     [SerializeField] public TextMeshProUGUI scoretext;
     // Start is called before the first frame update
     void Start()
@@ -47,6 +50,24 @@ public class Spawner : MonoBehaviour
         Startup();
         counter = 10;
     }
+    public void LoadData(GameData data)
+    {
+        speed= data.speed;
+        rotation = data.rotation;
+        //if (data.music)
+        //{
+        //    mixer.SetFloat("Master", Mathf.Log10(0.00001f) * 20);
+        //}
+        //else
+        //{
+        //    mixer.SetFloat("Master", Mathf.Log10(1f) * 20);
+        //}
+    }
+    public void SaveData(ref GameData data) 
+    {
+        //data.speed = speed;
+        //data.rotation = rotation;
+    }
     private int numbersetter()
     {
         int p = Random.Range(0, 19);
@@ -57,21 +78,6 @@ public class Spawner : MonoBehaviour
         }
         return p;
 
-    }
-    private void LateUpdate()
-    {
-        //Vector3 pos = button1.transform.position;
-        //pos.y += -1 * Time.deltaTime * speed;
-        //button1.transform.position = pos;
-        //pos = button2.transform.position;
-        //pos.y += -1 * Time.deltaTime * speed;
-        //button2.transform.position = pos;
-        //pos = button3.transform.position;
-        //pos.y += -1 * Time.deltaTime * speed;
-        //button3.transform.position = pos;
-        //pos = button4.transform.position;
-        //pos.y += -1 * Time.deltaTime * speed;
-        //button4.transform.position = pos;
     }
     private void Startup()
     {
@@ -141,12 +147,14 @@ public class Spawner : MonoBehaviour
         {
             scorer++;
             scorekeeper++;
+            trueanswer.Play();
             check();
             spawn = Instantiate(circle);
             spawn.transform.position = circlelocation.transform.position;
         }
         else
         {
+            wronganswer.Play();
             Time.timeScale = 0f;
             wrongicon.transform.position = Corn1.transform.position;
             StartCoroutine(wrong());
@@ -164,12 +172,14 @@ public class Spawner : MonoBehaviour
         {
             scorer++;
             scorekeeper++;
+            trueanswer.Play();
             check();
             spawn = Instantiate(circle);
             spawn.transform.position = circlelocation.transform.position;
         }
         else
         {
+            wronganswer.Play();
             Time.timeScale = 0f;
             wrongicon.transform.position = Corn2.transform.position;
             StartCoroutine(wrong());
@@ -187,12 +197,14 @@ public class Spawner : MonoBehaviour
         {
             scorer++;
             scorekeeper++;
+            trueanswer.Play();
             check();
             spawn = Instantiate(circle);
             spawn.transform.position = circlelocation.transform.position;
         }
         else
         {
+            wronganswer.Play();
             Time.timeScale = 0f;
             wrongicon.transform.position = Corn3.transform.position;
             StartCoroutine(wrong());
@@ -210,12 +222,14 @@ public class Spawner : MonoBehaviour
         {
             scorer++;
             scorekeeper++;
+            trueanswer.Play();
             check();
             spawn = Instantiate(circle);
             spawn.transform.position = circlelocation.transform.position;
         }
         else
         {
+            wronganswer.Play();
             Time.timeScale = 0f;
             wrongicon.transform.position = Corn4.transform.position;
             StartCoroutine(wrong());
@@ -223,14 +237,14 @@ public class Spawner : MonoBehaviour
     }
     void Update()
     {
-        button1.transform.Rotate(Vector3.forward * Time.deltaTime*60);
-        Corn1.transform.Rotate(Vector3.back * Time.deltaTime * 60);
-        button2.transform.Rotate(Vector3.forward * Time.deltaTime * 45);
-        Corn2.transform.Rotate(Vector3.back * Time.deltaTime * 45);
-        button3.transform.Rotate(Vector3.forward * Time.deltaTime * 35);
-        Corn3.transform.Rotate(Vector3.back * Time.deltaTime * 35);
-        button4.transform.Rotate(Vector3.forward * Time.deltaTime * 50);
-        Corn4.transform.Rotate(Vector3.back * Time.deltaTime * 50);
+        button1.transform.Rotate(Vector3.forward * Time.deltaTime*rotation);
+        Corn1.transform.Rotate(Vector3.back * Time.deltaTime * rotation);
+        button2.transform.Rotate(Vector3.forward * Time.deltaTime * rotation);
+        Corn2.transform.Rotate(Vector3.back * Time.deltaTime * rotation);
+        button3.transform.Rotate(Vector3.forward * Time.deltaTime * rotation);
+        Corn3.transform.Rotate(Vector3.back * Time.deltaTime * rotation);
+        button4.transform.Rotate(Vector3.forward * Time.deltaTime * rotation);
+        Corn4.transform.Rotate(Vector3.back * Time.deltaTime * rotation);
         countertext.text = scorer + " / 5";
         closingtext.text = scorekeeper + " / 10";
         Vector3 pos = button1.transform.position;
@@ -285,6 +299,7 @@ public class Spawner : MonoBehaviour
         }
         else
             check();
+        transform.GetComponent<AudioSource>().Play();
     }
     void positioning()
     {
