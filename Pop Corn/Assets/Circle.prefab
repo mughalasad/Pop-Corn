@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4456072156049203480}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.44, y: -0.06, z: 0}
+  m_LocalPosition: {x: 9.4254, y: -0.0641, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -76,11 +76,11 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 79205d62e3d43f5479b1b2af029a0150, type: 3}
-  m_Color: {r: 0.8509804, g: 0.8352941, b: 0.59607846, a: 1}
+  m_Color: {r: 1, g: 1, b: 0.6839622, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.8, y: 0.81}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -125,24 +125,26 @@ PolygonCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.8, y: 0.81}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 0.8, y: 0.81}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.21, y: 0.325}
-      - {x: 0.12, y: 0.39499998}
-      - {x: -0.06, y: 0.39499998}
-      - {x: -0.34, y: 0.265}
-      - {x: -0.39, y: 0.125}
-      - {x: -0.39, y: -0.044999998}
-      - {x: -0.35, y: -0.074999996}
-      - {x: -0.21, y: -0.275}
-      - {x: -0.08, y: -0.375}
-      - {x: 0.14, y: -0.405}
-      - {x: 0.22999999, y: -0.405}
-      - {x: 0.38, y: -0.195}
-      - {x: 0.39999998, y: -0.074999996}
-      - {x: 0.39999998, y: 0.024999999}
+    - - {x: 0.2756729, y: 0.11341587}
+      - {x: 0.18379684, y: 0.30170715}
+      - {x: 0.09961807, y: 0.3658839}
+      - {x: -0.054174956, y: 0.35714912}
+      - {x: -0.21018219, y: 0.20894614}
+      - {x: -0.29326996, y: 0.19900495}
+      - {x: -0.34093153, y: 0.10864505}
+      - {x: -0.37130415, y: 0.036774788}
+      - {x: -0.31495437, y: -0.07266358}
+      - {x: -0.13430114, y: -0.2691768}
+      - {x: -0.015943602, y: -0.32259113}
+      - {x: 0.20987763, y: -0.3933536}
+      - {x: 0.24455687, y: -0.29435888}
+      - {x: 0.36252868, y: -0.14841425}
+      - {x: 0.37961805, y: -0.063353576}
+      - {x: 0.37670743, y: -0.009939291}

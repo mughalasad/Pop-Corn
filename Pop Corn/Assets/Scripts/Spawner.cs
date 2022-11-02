@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
+using System.Net.Http.Headers;
 
 public class Spawner : MonoBehaviour,IDataPersistence
 {
@@ -13,6 +15,7 @@ public class Spawner : MonoBehaviour,IDataPersistence
     [SerializeField] private TextMeshProUGUI countertext;
     [SerializeField] private GameObject closingwindow;
     [SerializeField] private TextMeshProUGUI closingtext;
+    [SerializeField] private TextMeshProUGUI closingtext1;
     [SerializeField] private GameObject wrongwindow;
     [SerializeField] private GameObject wrongicon;
     [SerializeField] private GameObject button1;
@@ -24,6 +27,7 @@ public class Spawner : MonoBehaviour,IDataPersistence
     [SerializeField] private GameObject[] position;
     [SerializeField] private AudioSource trueanswer;
     [SerializeField] private AudioSource wronganswer;
+    public AudioMixer mixer;
     private GameObject spawn;
     Vector3 loc1,loc2, loc3, loc4;
     int letter1;
@@ -35,6 +39,7 @@ public class Spawner : MonoBehaviour,IDataPersistence
     int scorekeeper = 0;
     float speed;
     int rotation;
+    string sum;
     [SerializeField] public TextMeshProUGUI scoretext;
     // Start is called before the first frame update
     void Start()
@@ -47,30 +52,29 @@ public class Spawner : MonoBehaviour,IDataPersistence
         loc2 = button2.transform.position;
         loc3 = button3.transform.position;
         loc4 = button4.transform.position;
-        Startup();
         counter = 10;
     }
     public void LoadData(GameData data)
     {
         speed= data.speed;
         rotation = data.rotation;
-        //if (data.music)
-        //{
-        //    mixer.SetFloat("Master", Mathf.Log10(0.00001f) * 20);
-        //}
-        //else
-        //{
-        //    mixer.SetFloat("Master", Mathf.Log10(1f) * 20);
-        //}
+        sum = data.symbol;
+        if (data.music)
+        {
+            mixer.SetFloat("Master", Mathf.Log10(0.00001f) * 20);
+        }
+        else
+        {
+            mixer.SetFloat("Master", Mathf.Log10(1f) * 20);
+        }
+        Startup();
     }
-    public void SaveData(ref GameData data) 
-    {
-        //data.speed = speed;
-        //data.rotation = rotation;
-    }
+    public void SaveData(ref GameData data) {}
     private int numbersetter()
     {
         int p = Random.Range(0, 19);
+        if (sum == "x")
+            p = Random.Range(0, 81);
         if (p==answer)
         {
             p = p - 1;
@@ -85,10 +89,26 @@ public class Spawner : MonoBehaviour,IDataPersistence
         button2.transform.position = loc2;
         button3.transform.position = loc3;
         button4.transform.position = loc4;
-        letter1 = Random.Range(0, 10);
-        letter2 = Random.Range(0, 10);
-        answer = letter2 + letter1;
-        scoretext.text = letter1 + " + " + letter2 + " = ?";
+        switch(sum)
+        {
+            case "+":
+                letter1 = Random.Range(0, 10);
+                letter2 = Random.Range(0, 10);
+                answer = letter1 + letter2;
+                break;
+            case "-":
+                letter1 = Random.Range(0, 10);
+                letter2 = Random.Range(0, letter1 + 1);
+                answer = letter1 - letter2;
+                break;
+            case "x":
+                letter1 = Random.Range(0, 10);
+                letter2 = Random.Range(0, 10);
+                answer = letter1 * letter2;
+                break;
+
+        }
+        scoretext.text = letter1 + " " + sum + " " + letter2 + " = ?";
         selector = Random.Range(0, 4);
         switch(selector)
         {
@@ -245,8 +265,9 @@ public class Spawner : MonoBehaviour,IDataPersistence
         Corn3.transform.Rotate(Vector3.back * Time.deltaTime * rotation);
         button4.transform.Rotate(Vector3.forward * Time.deltaTime * rotation);
         Corn4.transform.Rotate(Vector3.back * Time.deltaTime * rotation);
-        countertext.text = scorer + " / 5";
-        closingtext.text = scorekeeper + " / 10";
+        countertext.text = "You Scored " + scorer + " / 5";
+        closingtext.text = scorekeeper + "";
+        closingtext1.text = scorekeeper + "";
         Vector3 pos = button1.transform.position;
         pos.y += -1 * Time.deltaTime * speed;
         button1.transform.position = pos;

@@ -25,7 +25,7 @@ public class Controller : MonoBehaviour
     }
     public void play()
     {
-        //DataPersistenceManager.instance.SaveGame();
+        DataPersistenceManager.instance.SaveGame();
         SceneManager.LoadScene(1);
     }
 

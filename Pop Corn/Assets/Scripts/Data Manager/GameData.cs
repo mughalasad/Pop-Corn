@@ -7,13 +7,13 @@ public class GameData
 {
     public float speed;
     public int rotation;
-    public int symbol;
+    public string symbol;
     public bool music;
     public GameData() 
     {
         this.speed = 1;
         this.rotation = 30;
-        this.symbol = 0;
+        this.symbol = "+";
         this.music = false;
     }
 }

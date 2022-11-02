@@ -58,6 +58,7 @@ public class Setting : MonoBehaviour,IDataPersistence
         data.speed = speed;
         data.rotation = rotation;
         data.music = musicchecker;
+        data.symbol = "+";
     }
     // Start is called before the first frame update
     void Start()
@@ -77,7 +78,6 @@ public class Setting : MonoBehaviour,IDataPersistence
     public void close()
     {
         SettingsPage.SetActive(false);
-        DataPersistenceManager.instance.SaveGame();
     }
     public void easy()
     {
