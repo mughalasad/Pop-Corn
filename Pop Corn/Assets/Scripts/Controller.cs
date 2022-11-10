@@ -11,6 +11,8 @@ public class Controller : MonoBehaviour
         rate = PlayerPrefs.GetInt("rating");
         if (rate % 5 == 0 && rate < 100)
             ratingwindow.SetActive(true);
+        else
+            ratingwindow.SetActive(false);
     }
     public void ratenow()
     {

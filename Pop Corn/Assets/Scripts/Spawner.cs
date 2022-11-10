@@ -24,6 +24,7 @@ public class Spawner : MonoBehaviour,IDataPersistence
     [SerializeField] private GameObject button4;
     [SerializeField] private GameObject circle;
     [SerializeField] private GameObject circlelocation;
+    [SerializeField] private GameObject confetti;
     [SerializeField] private GameObject[] position;
     [SerializeField] private AudioSource trueanswer;
     [SerializeField] private AudioSource wronganswer;
@@ -48,17 +49,17 @@ public class Spawner : MonoBehaviour,IDataPersistence
         closingwindow.SetActive(false);
         counterwindow.SetActive(false);
         wrongwindow.SetActive(false);
+        confetti.SetActive(false);
         loc1 = button1.transform.position;
         loc2 = button2.transform.position;
         loc3 = button3.transform.position;
         loc4 = button4.transform.position;
-        counter = 10;
+        counter = 15;
     }
     public void LoadData(GameData data)
     {
         speed= data.speed;
         rotation = data.rotation;
-        sum = data.symbol;
         if (data.music)
         {
             mixer.SetFloat("Master", Mathf.Log10(0.00001f) * 20);
@@ -89,6 +90,35 @@ public class Spawner : MonoBehaviour,IDataPersistence
         button2.transform.position = loc2;
         button3.transform.position = loc3;
         button4.transform.position = loc4;
+        if(rotation==30)
+        {
+            int x = Random.Range(0, 10);
+            if (x < 5)
+                sum = "+";
+            else
+                sum = "-";
+
+        }
+        else if(rotation==40)
+        {
+            int x = Random.Range(0, 10);
+            if (x < 4)
+                sum = "+";
+            else if (x < 8)
+                sum = "-";
+            else
+                sum = "x";
+        }
+        else
+        {
+            int x = Random.Range(0, 10);
+            if (x < 6)
+                sum = "x";
+            else if (x < 8)
+                sum = "-";
+            else
+                sum = "+";
+        }
         switch(sum)
         {
             case "+":
@@ -145,32 +175,51 @@ public class Spawner : MonoBehaviour,IDataPersistence
         yield return new WaitForSecondsRealtime(1);
         wrongwindow.SetActive(false);
         wrongicon.SetActive(false);
+        if (counter % 5 == 0)
+        {
+            Time.timeScale = 0f;
+            counterwindow.SetActive(true);
+        }
         if (!counterwindow.activeInHierarchy)
         {
             Time.timeScale = 1f;
             check();
         }
         if (counter == 0)
+        { 
             closingwindow.SetActive(true);
+            confetti.SetActive(true); 
+        }
 
         yield break;
     }
+    //IEnumerator wait()
+    //{
+    //    yield return new WaitForSecondsRealtime(0.1f);
+    //    confetti.SetActive(false);
+    //    Time.timeScale = 1f;
+    //    check();
+    //    yield break;
+    //}
     public void corn1answer()
     {
         counter--;
-        if (counter % 5 == 0)
-        {
-            Time.timeScale = 0f;
-            counterwindow.SetActive(true);
-        }
         if (Corn1.text == answer.ToString())
         {
             scorer++;
             scorekeeper++;
             trueanswer.Play();
-            check();
+            //confetti.transform.position = Corn1.transform.position;
             spawn = Instantiate(circle);
             spawn.transform.position = circlelocation.transform.position;
+            check();
+            //Time.timeScale = 0f;
+            //StartCoroutine(wait());
+            if (counter % 5 == 0)
+            {
+                Time.timeScale = 0f;
+                counterwindow.SetActive(true);
+            }
         }
         else
         {
@@ -183,19 +232,22 @@ public class Spawner : MonoBehaviour,IDataPersistence
     public void corn2answer()
     {
         counter--;
-        if(counter%5==0)
-        {
-            counterwindow.SetActive(true);
-            Time.timeScale = 0f;
-        }
         if (Corn2.text == answer.ToString())
         {
             scorer++;
             scorekeeper++;
             trueanswer.Play();
-            check();
+            //confetti.transform.position = Corn2.transform.position;
             spawn = Instantiate(circle);
             spawn.transform.position = circlelocation.transform.position;
+            check();
+            //Time.timeScale = 0f;
+            //StartCoroutine(wait());
+            if (counter % 5 == 0)
+            {
+                counterwindow.SetActive(true);
+                Time.timeScale = 0f;
+            }
         }
         else
         {
@@ -208,19 +260,22 @@ public class Spawner : MonoBehaviour,IDataPersistence
     public void corn3answer()
     {
         counter--;
-        if (counter % 5 == 0)
-        {
-            counterwindow.SetActive(true);
-            Time.timeScale = 0f;
-        }
         if (Corn3.text == answer.ToString())
         {
             scorer++;
             scorekeeper++;
             trueanswer.Play();
-            check();
+            //confetti.transform.position = Corn3.transform.position;
             spawn = Instantiate(circle);
             spawn.transform.position = circlelocation.transform.position;
+            check();
+            //Time.timeScale = 0f;
+            //StartCoroutine(wait());
+            if (counter % 5 == 0)
+            {
+                counterwindow.SetActive(true);
+                Time.timeScale = 0f;
+            }
         }
         else
         {
@@ -233,19 +288,22 @@ public class Spawner : MonoBehaviour,IDataPersistence
     public void corn4answer()
     {
         counter--;
-        if (counter % 5 == 0)
-        {
-            counterwindow.SetActive(true);
-            Time.timeScale = 0f;
-        }
         if (Corn4.text == answer.ToString())
         {
             scorer++;
             scorekeeper++;
             trueanswer.Play();
-            check();
+            //confetti.transform.position = Corn4.transform.position;
             spawn = Instantiate(circle);
             spawn.transform.position = circlelocation.transform.position;
+            check();
+            //Time.timeScale = 0f;
+            //StartCoroutine(wait());
+            if (counter % 5 == 0)
+            {
+                counterwindow.SetActive(true);
+                Time.timeScale = 0f;
+            }
         }
         else
         {
@@ -293,7 +351,6 @@ public class Spawner : MonoBehaviour,IDataPersistence
     }
     public void closing()
     {
-        closingwindow.SetActive(false);
         SceneManager.LoadScene(0);
         int rate = PlayerPrefs.GetInt("rating");
         rate++;
@@ -304,6 +361,7 @@ public class Spawner : MonoBehaviour,IDataPersistence
         if (counter == 0)
         {
             closingwindow.SetActive(true);
+            confetti.SetActive(true);
         }
         else if (counter % 5 != 0)
             positioning();
@@ -316,7 +374,10 @@ public class Spawner : MonoBehaviour,IDataPersistence
             counterwindow.SetActive(true);
             Time.timeScale = 0f;
             if (counter == 0)
+            {
                 closingwindow.SetActive(true);
+                confetti.SetActive(true);
+            }
         }
         else
             check();
